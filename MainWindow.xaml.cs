@@ -15,18 +15,18 @@ namespace svg_shortener
             InitializeComponent();
             Loaded += (m, n) =>
             {
-                tbRawData.TextChanged += TbRawData_TextChanged;
+                TbRawData.TextChanged += TbRawData_TextChanged;
             };
         }
 
-        public string Fix_num(string num)
+        public string Fix_num(string num, string rounding_fluff)
         {
             if (!double.TryParse(num, out double result))
             {
                 return "0";
             }
 
-            string res = result.ToString("0.###");
+            string res = result.ToString(rounding_fluff);
             if (res == "0.0")
             {
                 return "0";
@@ -45,13 +45,29 @@ namespace svg_shortener
 
         private void TbRawData_TextChanged(object sender, TextChangedEventArgs e)
         {
-            string text = (sender as TextBox).Text;
+            Run_Data_Fixing();
+        }
+        private void CbRounding_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Run_Data_Fixing();
+        }
+
+        private void Run_Data_Fixing()
+        {
+            byte.TryParse((CbRounding.SelectedItem as ComboBoxItem)?.Content.ToString() ?? "3", out byte roundnum);
+
+            var round_fluff = "0.".PadRight(roundnum + 2, '#');
+
+            string text = TbRawData.Text;
             StringBuilder sb = new StringBuilder();
             string[] parts = text.Split(" ");
             string[] list;
             Regex only_letters = new Regex(@"^[a-zA-Z]+$");
             foreach (string part in parts)
             {
+                if (string.IsNullOrEmpty(part))
+                    continue;
+
                 if (only_letters.IsMatch(part))
                 {
                     _ = sb.Append(part);
@@ -61,13 +77,13 @@ namespace svg_shortener
                     list = part.Split(",");
                     if (list.Length == 2)
                     {
-                        _ = sb.Append(Fix_num(list[0]));
+                        _ = sb.Append(Fix_num(list[0], round_fluff));
                         _ = sb.Append(",");
-                        _ = sb.Append(Fix_num(list[1]));
+                        _ = sb.Append(Fix_num(list[1], round_fluff));
                     }
                     else if (list.Length == 1)
                     {
-                        _ = sb.Append(Fix_num(list[0]));
+                        _ = sb.Append(Fix_num(list[0], round_fluff));
                     }
                     else
                     {
@@ -76,9 +92,10 @@ namespace svg_shortener
                 }
                 _ = sb.Append(" ");
             }
-            tbFixedData.Text = sb.ToString().Trim();
-            tbTitle1.Text = "Raw svg data (" + text.Length + ")";
-            tbTitle2.Text = "cleaned up data (" + tbFixedData.Text.Length + ")";
+            TbFixedData.Text = sb.ToString().Trim();
+            TbTitle1.Text = "Raw svg data (" + text.Length + ")";
+            TbTitle2.Text = "cleaned up data (" + TbFixedData.Text.Length + ")";
         }
+
     }
 }

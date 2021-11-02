@@ -9,6 +9,40 @@
         Title="Make data gooder"
     Height="194"
     Width="242">
+    <Window.Resources>
+        <Style
+            TargetType="Path">
+            <Setter
+                Property="Stretch"
+                Value="Uniform" />
+            <Setter
+                Property="Fill"
+                Value="#ccc" />
+            <Setter
+                Property="VerticalAlignment"
+                Value="Stretch" />
+            <Setter
+                Property="HorizontalAlignment"
+                Value="Stretch" />
+        </Style>
+        <Style
+            TargetType="TextBlock"
+            BasedOn="{StaticResource {x:Type TextBlock}}">
+            <Setter
+                Property="Foreground"
+                Value="#ccc" />
+        </Style>
+        <Style
+            TargetType="TextBox"
+            BasedOn="{StaticResource {x:Type TextBox}}">
+            <Setter
+                Property="Foreground"
+                Value="#ccc" />
+            <Setter
+                Property="Background"
+                Value="#888" />
+        </Style>
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition
@@ -19,27 +53,57 @@
                 Height="Auto" />
             <RowDefinition
                 Height="Auto" />
+            <RowDefinition
+                Height="Auto" />
+            <RowDefinition />
         </Grid.RowDefinitions>
         <TextBlock
-            Name="tbTitle1"
-            Foreground="#ccc"
+            Name="TbTitle1"
             Text="Raw svg data" />
         <TextBox
-            Background="#888"
-            Foreground="#ccc"
             Grid.Row="1"
             Text="Put stuff here"
-            Name="tbRawData" />
+            Name="TbRawData" />
         <TextBlock
-            Name="tbTitle2"
+            Name="TbTitle2"
             Grid.Row="2"
-            Foreground="#ccc"
             Text="cleaned up data" />
         <TextBox
-            Background="#888"
-            Foreground="#ccc"
             Grid.Row="3"
             Text="copy what comes out here"
-            Name="tbFixedData" />
+            Name="TbFixedData" />
+
+        <TextBlock
+            HorizontalAlignment="Left"
+            Grid.Row="4"
+            Text="Rounding" />
+        <ComboBox
+            SelectionChanged="CbRounding_SelectionChanged"
+            Grid.Row="4"
+            HorizontalAlignment="Right"
+            Margin="0,0,30,0"
+            Name="CbRounding"
+            SelectedIndex="2">
+            <ComboBoxItem>0</ComboBoxItem>
+            <ComboBoxItem>1</ComboBoxItem>
+            <ComboBoxItem>2</ComboBoxItem>
+            <ComboBoxItem>3</ComboBoxItem>
+            <ComboBoxItem>4</ComboBoxItem>
+            <ComboBoxItem>5</ComboBoxItem>
+        </ComboBox>
+        
+
+        <Grid Grid.Row="5" Margin="20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Path
+                Grid.Column="0"
+                Data="{Binding Path=Text, ElementName=TbRawData}" />
+            <Path
+                Grid.Column="1"
+                Data="{Binding Path=Text, ElementName=TbFixedData}" />
+        </Grid>
     </Grid>
 </Window>
