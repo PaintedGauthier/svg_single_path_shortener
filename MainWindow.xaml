@@ -1,0 +1,45 @@
+﻿<Window x:Class="svg_shortener.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:svg_shortener"
+        mc:Ignorable="d"
+        Background="#33333a"
+        Title="Make data gooder"
+    Height="194"
+    Width="242">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition
+                Height="Auto" />
+            <RowDefinition
+                Height="Auto" />
+            <RowDefinition
+                Height="Auto" />
+            <RowDefinition
+                Height="Auto" />
+        </Grid.RowDefinitions>
+        <TextBlock
+            Name="tbTitle1"
+            Foreground="#ccc"
+            Text="Raw svg data" />
+        <TextBox
+            Background="#888"
+            Foreground="#ccc"
+            Grid.Row="1"
+            Text="Put stuff here"
+            Name="tbRawData" />
+        <TextBlock
+            Name="tbTitle2"
+            Grid.Row="2"
+            Foreground="#ccc"
+            Text="cleaned up data" />
+        <TextBox
+            Background="#888"
+            Foreground="#ccc"
+            Grid.Row="3"
+            Text="copy what comes out here"
+            Name="tbFixedData" />
+    </Grid>
+</Window>
